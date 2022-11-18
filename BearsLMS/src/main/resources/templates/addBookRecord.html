@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Add a Book</title>
+</head>
+
+<body>
+	<h1>Add a Book</h1>
+
+	<form th:action="@{/processBookAddition}" method="POST" th:object="${book}">
+		<div>
+			<label>ISBN:</label>
+			<input type="text" th:field="*{isbn}" required>
+		</div>
+
+		<div>
+			<label>Title:</label>
+			<input type="text" th:field="*{title}" required>
+		</div>
+
+		<div>
+			<label>Author:</label>
+			<input type="text" th:field="*{author}">
+		</div>
+
+		<div>
+			<label>Page Count:</label>
+			<input type="number" th:field="*{numOfPages}">
+		</div>
+
+		<div>
+			<button type="submit">Add Book</button>
+		</div>
+</body>
+
+</html>
