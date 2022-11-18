@@ -11,31 +11,31 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
 
-import library.beans.User;
-import library.repositories.UserRepository;
+import library.beans.Book;
+import library.repositories.BookRepository;
 
-@DataJpaTest // To allow for testing with JPA persistence
-@AutoConfigureTestDatabase(replace = Replace.NONE) // To compare the results with the actual database
-@Rollback(false) // To commit the results
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = Replace.NONE)
+@Rollback(false)
+public class BookRepositoryTest {
 
-public class UserRepositoryTest {
 	@Autowired
-	UserRepository repo;
+	BookRepository repo;
 
 	@Autowired
 	private TestEntityManager manager;
 
 	@Test
-	public void testCreateUser() {
+	public void testCreateBook() {
 
 		// ARRANGE
-		User toTest = new User("Maria", "Bravard", "admin@gmail.com", "Admin@1234", "8303028094");
+		Book toTest = new Book("978-0-230-10952-0", "The Famine Plot", "Tim Pat Coogan", 276);
 
 		// ACT
-		User saved = repo.save(toTest); // Saving him/her
-		User existing = manager.find(User.class, saved.getUserID()); // Finding the existing customer
+		Book saved = repo.save(toTest);
+		Book existing = manager.find(Book.class, saved.getBookID());
 
 		// ASSERT
-		assertThat(existing.getFirstName()).isEqualTo(toTest.getFirstName()); // Comparing the results and testing
+		assertThat(existing.getAuthor()).isEqualTo(toTest.getAuthor()); // Comparing the results and testing
 	}
 }

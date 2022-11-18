@@ -3,6 +3,8 @@ package library; // The package where this test class is located at
 // Including the needed imports
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.sql.Date;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -11,31 +13,31 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
 
-import library.beans.User;
-import library.repositories.UserRepository;
+import library.beans.Issuance;
+import library.repositories.IssuanceRepository;
 
-@DataJpaTest // To allow for testing with JPA persistence
-@AutoConfigureTestDatabase(replace = Replace.NONE) // To compare the results with the actual database
-@Rollback(false) // To commit the results
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = Replace.NONE)
+@Rollback(false)
+public class IssuanceRepositoryTest {
 
-public class UserRepositoryTest {
 	@Autowired
-	UserRepository repo;
+	IssuanceRepository repo;
 
 	@Autowired
 	private TestEntityManager manager;
 
 	@Test
-	public void testCreateUser() {
+	public void testCreateBook() {
 
 		// ARRANGE
-		User toTest = new User("Maria", "Bravard", "admin@gmail.com", "Admin@1234", "8303028094");
+		Issuance toTest = new Issuance(new Date(11-17-2022), 25.36, new Date(12-31-2022));
 
 		// ACT
-		User saved = repo.save(toTest); // Saving him/her
-		User existing = manager.find(User.class, saved.getUserID()); // Finding the existing customer
+		Issuance saved = repo.save(toTest);
+		Issuance existing = manager.find(Issuance.class, saved.getIssuanceID());
 
 		// ASSERT
-		assertThat(existing.getFirstName()).isEqualTo(toTest.getFirstName()); // Comparing the results and testing
+		assertThat(existing.getIssuanceID()).isEqualTo(toTest.getIssuanceID()); // Comparing the results and testing
 	}
 }

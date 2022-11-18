@@ -12,11 +12,13 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import library.services.RegisteredUserDetailsService;
+
 @SuppressWarnings("deprecation")
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
-	
+
 	@SuppressWarnings("unused")
 	@Autowired
 	private DataSource source;
@@ -75,6 +77,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/list").authenticated().anyRequest().permitAll().and().formLogin()
 				.usernameParameter("emailAddress").defaultSuccessUrl("/list").permitAll().and().logout()
-				.logoutSuccessUrl("/").permitAll();
+				.logoutUrl("/logout").permitAll();
 	}
 }

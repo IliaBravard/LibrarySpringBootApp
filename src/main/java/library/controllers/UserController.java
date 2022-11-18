@@ -15,7 +15,7 @@ import library.beans.User;
 import library.repositories.UserRepository;
 
 @Controller // Tells SpringBoot that this is the controller class
-public class WebController {
+public class UserController {
 
 	@Autowired
 	private UserRepository repo; // Allows for the use of JPA persistence

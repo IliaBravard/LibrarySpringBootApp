@@ -1,4 +1,4 @@
-package library.security;
+package library.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import library.beans.User;
 import library.repositories.UserRepository;
+import library.security.RegisteredUserDetails;
 
 public class RegisteredUserDetailsService implements UserDetailsService {
 
