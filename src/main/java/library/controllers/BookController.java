@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import library.beans.Book;
+import library.beans.Genre;
+import library.repositories.GenreRepository;
 import library.services.BookService;
 
 @Controller
@@ -20,10 +22,15 @@ public class BookController {
 
 	@Autowired
 	private BookService service;
+	
+	@Autowired
+	private GenreRepository repo;
 
 	@GetMapping("/addBooks")
 	public String viewAddBookPage(Model model) {
+		List<Genre> genres = repo.findAll();
 		model.addAttribute("book", new Book());
+		model.addAttribute("genres", genres);
 		return "addBookRecord";
 	}
 

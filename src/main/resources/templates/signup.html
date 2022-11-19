@@ -37,6 +37,16 @@
 					<label>Phone Number:</label>
 					<input type=" tel" name="phone" placeholder="(999) 888-6666"
 						pattern="(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}" th:field="*{phone}" required />
+				</div><br><br>
+
+				<div>
+					<label>Role(s):</label>
+					<th:block th:each="role : ${listOfRoles}">
+						<div>
+							<input type="checkbox" th:field="*{roles}" th:text="${role.roleName}"
+								th:value="${role.roleID}" />
+						</div>
+					</th:block>
 				</div>
 
 				<div>

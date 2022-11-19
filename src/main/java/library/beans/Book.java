@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -31,11 +33,12 @@ public class Book {
 	@Column(name = "Author")
 	private String author; // The book's author
 
-	@Column(name = "Num_Of_Pages")
-	private int numOfPages; // The total number of pages the book has
-	
-	@Column(name="returned")
+	@Column(name = "returned")
 	private Boolean returnStatus;
+	
+	@ManyToOne
+	@JoinColumn(name = "genreID")
+	private Genre genre;
 
 	/**
 	 * This is the nondefault constructor that sets the fields of this class.
@@ -43,13 +46,10 @@ public class Book {
 	 * @param number  - the book's international number
 	 * @param name    - the book's title
 	 * @param writer  - the book's author
-	 * @param pageCnt - the book's total number of pages
 	 */
-	public Book(String number, String name, String writer, int pageCnt) {
+	public Book(String number, String name, String writer) {
 		setIsbn(number);
 		setTitle(name);
 		setAuthor(writer);
-		setNumOfPages(pageCnt);
-
 	}
 }

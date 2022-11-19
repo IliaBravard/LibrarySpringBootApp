@@ -1,13 +1,18 @@
 package library.beans; // The package where this bean is located at
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 // Including the needed imports
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 // Including the imports for Lombok
@@ -41,6 +46,29 @@ public class User {
 	@Column(name = "Phone_Number", nullable = false)
 	private String phone; // The user's phone number
 
+	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER) // Unidirection many to many relationship
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private List<UserRole> roles;
+
+	/**
+	 * This is the nondefault constructor that auto-generates the ID for each user
+	 * and sets the rest of his/her attributes.
+	 * 
+	 * @param fName    - the user's first name
+	 * @param lName    - the user's last name
+	 * @param username - the user's username (email)
+	 * @param password - the user's password
+	 * @param phone    - the user's phone number
+	 */
+	public User(String fName, String lName, String username, String password, String phone, List<UserRole>  role) {
+		setFirstName(fName);
+		setLastName(lName);
+		setEmailAddress(username);
+		setPassword(password);
+		setPhone(phone);
+		setRoles(role);
+	}
+	
 	/**
 	 * This is the nondefault constructor that auto-generates the ID for each user
 	 * and sets the rest of his/her attributes.

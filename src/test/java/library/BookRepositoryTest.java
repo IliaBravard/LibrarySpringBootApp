@@ -29,7 +29,7 @@ public class BookRepositoryTest {
 	public void testCreateBook() {
 
 		// ARRANGE
-		Book toTest = new Book("978-0-230-10952-0", "The Famine Plot", "Tim Pat Coogan", 276);
+		Book toTest = new Book("978-0-230-10952-0", "The Famine Plot", "Tim Pat Coogan");
 
 		// ACT
 		Book saved = repo.save(toTest);

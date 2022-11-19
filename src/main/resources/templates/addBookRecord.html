@@ -26,8 +26,15 @@
 		</div>
 
 		<div>
-			<label>Page Count:</label>
-			<input type="number" th:field="*{numOfPages}">
+			<label>Genre:</label>
+
+			<div>
+				<select th:field="*{genre}">
+					<th:block th:each="genre : ${genres}">
+						<option th:text="${genre.bookGenres}" th:value="${genre.genreID}" <th:block>
+				</select>
+			</div>
+
 		</div>
 
 		<div>

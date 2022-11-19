@@ -26,7 +26,7 @@
 					<th>Book ISBN</th>
 					<th>Title</th>
 					<th>Author</th>
-					<th>Number Of Pages</th>
+					<th>Book Genre</th>
 					<th>Actions</th>
 				</tr>
 			</thread>
@@ -36,7 +36,7 @@
 					<td th:text=${book.isbn}>Book ISBN</td>
 					<td th:text=${book.title}>Title</td>
 					<td th:text=${book.author}>Author</td>
-					<td th:text=${book.numOfPages}>Number Of Pages</td>
+					<td th:text=${book.genre.bookGenres}>Genre</td>
 					<td>
 						<a th:href="@{'/edit/' + ${book.bookID}}">Edit</a>
 						&nbsp;&nbsp;&nbsp;&nbsp;

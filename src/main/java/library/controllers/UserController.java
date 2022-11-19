@@ -12,13 +12,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 // Allows access to the bean class
 import library.beans.User;
+import library.beans.UserRole;
 import library.repositories.UserRepository;
+import library.repositories.UserRoleRepository;
 
 @Controller // Tells SpringBoot that this is the controller class
 public class UserController {
 
 	@Autowired
 	private UserRepository repo; // Allows for the use of JPA persistence
+
+	@Autowired
+	private UserRoleRepository roleRepo;
 
 	/**
 	 * This method redirects the user to the home page.
@@ -38,6 +43,8 @@ public class UserController {
 	 */
 	@GetMapping("/register")
 	public String viewRegistration(Model model) {
+		List<UserRole> listOfRoles = roleRepo.findAll();
+		model.addAttribute("listOfRoles", listOfRoles);
 		model.addAttribute("user", new User());
 		return "signup";
 	}
@@ -59,7 +66,7 @@ public class UserController {
 	 * @return the successful registration page
 	 */
 	@PostMapping("/processRegistration")
-	public String processRegistration(User registeredUser) {
+	public String processRegistration(User registeredUser, Model model) {
 
 		// Encrypting the user's password in the local database
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
