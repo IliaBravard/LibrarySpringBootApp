@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,9 +34,12 @@ public class Book {
 	@Column(name = "Author")
 	private String author; // The book's author
 
-	@Column(name = "returned")
-	private Boolean returnStatus;
-	
+	@Column(name = "book_cover")
+	private String bookCover;
+
+	@Column(name = "num_of_pages")
+	private String numOfPages;
+
 	@ManyToOne
 	@JoinColumn(name = "genreID")
 	private Genre genre;
@@ -43,13 +47,21 @@ public class Book {
 	/**
 	 * This is the nondefault constructor that sets the fields of this class.
 	 * 
-	 * @param number  - the book's international number
-	 * @param name    - the book's title
-	 * @param writer  - the book's author
+	 * @param number - the book's international number
+	 * @param name   - the book's title
+	 * @param writer - the book's author
 	 */
 	public Book(String number, String name, String writer) {
 		setIsbn(number);
 		setTitle(name);
 		setAuthor(writer);
+	}
+
+	@Transient
+	public String getBookCoverPath() {
+		if (bookCover == null) {
+			return null;
+		}
+		return "/src/main/resources/static/thumbnails/" + bookID + "/" + bookCover;
 	}
 }

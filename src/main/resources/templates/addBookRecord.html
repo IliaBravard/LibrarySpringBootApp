@@ -4,12 +4,45 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Add a Book</title>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+	<script type="text/javascript">
+
+		$(document).ready(function () {
+
+			$('#fileImage').change(function () {
+				showImage(this);
+			});
+		});
+
+		function showImage(fileInput) {
+			file = fileInput.files[0];
+			reader = new FileReader();
+
+			reader.onload = function (e) {
+				$('#cover').attr('src', e.target.result);
+			};
+			reader.readAsDataURL(file);
+		};
+	</script>
+
 </head>
 
 <body>
 	<h1>Add a Book</h1>
 
-	<form th:action="@{/processBookAddition}" method="POST" th:object="${book}">
+	<form th:action="@{/processBookAddition}" method="POST" th:object="${book}" enctype="multipart/form-data">
+
+		<div>
+			<label>Book Cover Image:</label>
+			<input type="file" name="fileImage" id="fileImage" accept="image/png, image/jpeg, image/jpg" />
+		</div>
+
+		<div>
+			<span id="cover" style="width:50px; height:75px;"></span>
+		</div>
+
 		<div>
 			<label>ISBN:</label>
 			<input type="text" th:field="*{isbn}" required>
@@ -22,7 +55,7 @@
 
 		<div>
 			<label>Author:</label>
-			<input type="text" th:field="*{author}">
+			<input type="text" th:field="*{author}" />
 		</div>
 
 		<div>
@@ -31,7 +64,8 @@
 			<div>
 				<select th:field="*{genre}">
 					<th:block th:each="genre : ${genres}">
-						<option th:text="${genre.bookGenres}" th:value="${genre.genreID}" <th:block>
+						<option th:text="${genre.bookGenres}" th:value="${genre.genreID}"></option>
+					</th:block>
 				</select>
 			</div>
 

@@ -1,16 +1,26 @@
 package library.controllers; // The package where this controller class is located at
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import library.beans.Book;
 import library.beans.Genre;
@@ -22,7 +32,7 @@ public class BookController {
 
 	@Autowired
 	private BookService service;
-	
+
 	@Autowired
 	private GenreRepository repo;
 
@@ -35,9 +45,31 @@ public class BookController {
 	}
 
 	@PostMapping("/processBookAddition")
-	public String processBookAddition(Book toAdd) {
-		toAdd.setReturnStatus(false);
-		service.save(toAdd);
+	public String processBookAddition(@ModelAttribute("book") Book toAdd,
+			@RequestParam("fileImage") MultipartFile multipartFile, RedirectAttributes ra) throws IOException {
+
+		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+		toAdd.setBookCover(fileName);
+		Book savedBook = service.save(toAdd);
+
+		String uploadDirectory = "./src/main/resources/static/thumbnails/" + savedBook.getBookID();
+		Path uploadPath = Paths.get(uploadDirectory);
+
+		if (!Files.exists(uploadPath)) {
+			Files.createDirectories(uploadPath);
+		}
+
+		try (InputStream inputStream = multipartFile.getInputStream()) {
+			Path filePath = uploadPath.resolve(fileName);
+			System.out.println(filePath.toFile().getAbsolutePath()); /* Diagnostic */
+
+			Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+		} catch (IOException e) {
+			throw new IOException("The following file could not be saved: " + fileName);
+		}
+
+		ra.addFlashAttribute("message", "The book was saved successfully");
+
 		return "index";
 	}
 

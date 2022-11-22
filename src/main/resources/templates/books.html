@@ -22,6 +22,7 @@
 		<table>
 			<thread>
 				<tr>
+					<th>Book Cover</th>
 					<th>Book ID#</th>
 					<th>Book ISBN</th>
 					<th>Title</th>
@@ -32,6 +33,11 @@
 			</thread>
 			<tbody>
 				<tr th:each="book: ${listOfBooks}">
+
+					<td>
+						<img th:src="@{${book.bookCoverPath}}" style="width:50px; height:75px;">
+					</td>
+
 					<td th:text=${book.bookID}>Book ID#</td>
 					<td th:text=${book.isbn}>Book ISBN</td>
 					<td th:text=${book.title}>Title</td>

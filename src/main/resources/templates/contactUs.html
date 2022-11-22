@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Contact Us</title>
+</head>
+
+<body>
+	<h1>Contact Management</h1>
+
+	<div>
+
+		<form th:action="@{/contact}" method="POST">
+
+			<div>
+				<label>Subject: </label>
+				<input type="text" name="subject" required minlength="15" maxlength="100" />
+			</div>
+
+			<div>
+				<label>Full Name: </label>
+				<input type="text" name="fullName" required minlength="3" maxlength="45" />
+			</div>
+
+			<div>
+				<label>E-mail: </label>
+				<input type="email" name="email" required maxlength="45" />
+			</div>
+
+			<div>
+				<label>Message: </label>
+				<textarea rows="5" name = "message" required></textarea>
+			</div>
+
+			<div>
+				<input type="submit" value="Send" />
+			</div>
+		</form>
+
+	</div>
+</body>
+
+</html>
