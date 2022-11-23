@@ -10,6 +10,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -35,6 +38,25 @@ public class BookController {
 
 	@Autowired
 	private GenreRepository repo;
+
+	@GetMapping("")
+	public String viewLoginPage() {
+		return "redirect:/login";
+	}
+	
+	@GetMapping("/login")
+	public String defaultPageToShow() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if(authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+			return "login";
+		}
+		return "index";
+	}
+	
+	@GetMapping("/loginSuccessful")
+	public String toDelete() {
+		return "index";
+	}
 
 	@GetMapping("/addBooks")
 	public String viewAddBookPage(Model model) {

@@ -1,0 +1,45 @@
+@charset "ISO-8859-1";
+.background {
+            background-color: white;
+            box-shadow: 12px 12px 22px black;
+            border-top-right-radius: 25px;
+            border-bottom-right-radius: 25px;
+        }
+
+        body {
+            background-color: grey;
+        }
+
+        .carousel {
+            box-shadow: 12px 12px 22px whitesmoke;
+            border-top-left-radius: 25px;
+            border-bottom-left-radius: 25px;
+        }
+
+        h1 {
+            color: black;
+            font-size: 45px;
+            font-weight: 800;
+            padding-top: 10px;
+        }
+
+        p {
+            color: rgb(137, 137, 141);
+        }
+
+        .btn1 {
+            background-color: black;
+            color: white;
+            outline: none;
+            border: none;
+            border-radius: 10px;
+            height: 50px;
+            width: 220px;
+        }
+
+        .btn1:hover {
+            background-color: white;
+            border: 1px solid black;
+            color: black;
+            transition: 400ms;
+        }

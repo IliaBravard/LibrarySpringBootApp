@@ -26,16 +26,6 @@ public class UserController {
 	private UserRoleRepository roleRepo;
 
 	/**
-	 * This method redirects the user to the home page.
-	 * 
-	 * @return the index page
-	 */
-	@GetMapping("")
-	public String viewHome() {
-		return "index";
-	}
-
-	/**
 	 * This method redirects the user to the registration form.
 	 * 
 	 * @param model - the model interface
@@ -48,17 +38,7 @@ public class UserController {
 		model.addAttribute("user", new User());
 		return "signup";
 	}
-
-	/**
-	 * This method redicrects the user to the login page.
-	 * 
-	 * @return the sign in page
-	 */
-	@GetMapping("/login")
-	public String viewSystem() {
-		return "signin";
-	}
-
+	
 	/**
 	 * This method registers a new user and adds it to the database.
 	 * 
