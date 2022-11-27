@@ -7,13 +7,6 @@
 </head>
 
 <body>
-	<div>
-		<form th:action="@{/logout}" method=POST>
-			<p>Welcome <b>[[${#request.userPrincipal.principal.fullName}]]</b></p>
-			<input type="submit" value="Sing Out" />
-		</form>
-	</div>
-
 	<h1>All Users</h1>
 
 	<div>

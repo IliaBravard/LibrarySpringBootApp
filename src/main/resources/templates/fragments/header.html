@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="html_header">
+	<header>
+		<link rel="stylesheet" th:href="@{styling/headerStyle.css}" />
+		<a th:href="@{/index}" class="logo"><img th:src="@{images/EmailLogo.png}" /></a>
+		<nav>
+			<ul>
+				<li style="--i:1;"><a th:href="@{/index}">Home</a></li>
+				<li style="--i:2;"><a th:href="@{/bookList}">Books</a></li>
+				<li style="--i:3;"><a th:href="@{/addBooks}">Add Books</a></li>
+				<li style="--i:4;"><a th:href="@{/list}">Users</a></li>
+				<li style="--i:5;"><a th:href="@{/register}">Add Users</a></li>
+				<li style="--i:6;"><a th:href="@{/contact}">Contact Us</a></li>
+				<li style="--i:7;">
+					<form th:action="@{/logout}" method=POST>
+						<a><input type="submit" value="Log Out"/></a>
+					</form>
+				</li>
+			</ul>
+		</nav>
+	</header>
+</th:block>
+
+</html>

@@ -36,7 +36,7 @@ public class ContactController {
 
 		MimeMessage message = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);
-		
+
 		String mailSubject = fullName + " sent a new message ";
 		String mailContent = "<p><b>Sender's name:</b> " + fullName + "</p>";
 		mailContent += "<p><b>Sender's E-Mail:</b> " + email + "</p>";
@@ -48,7 +48,7 @@ public class ContactController {
 		helper.setTo("myselfigb@gmail.com");
 		helper.setSubject(mailSubject);
 		helper.setText(mailContent, true);
-		
+
 		ClassPathResource resource = new ClassPathResource("/static/images/EmailLogo.png");
 		helper.addInline("logoImage", resource);
 

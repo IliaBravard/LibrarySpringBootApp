@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="html_footer">
+	<footer>
+		<link rel="stylesheet" th:href="@{styling/footerStyle.css}" />
+		<div class="waves">
+			<div class="wave wave1">
+				<center><a th:href="@{/index}"><img th:src="@{images/BearLogo.png}" style="width:68px; height:50px"></a></center>
+				<center>
+					<span>
+						<strong>©2022 Bears Library Management System | All Rights Reserved</strong>
+					</span>
+				</center>
+			</div>
+			<div class="wave wave2"></div>
+			<div class="wave wave3"></div>
+			<div class="wave wave4"></div>
+		</div>
+	</footer>
+</th:block>
+
+</html>

@@ -1,0 +1,28 @@
+@charset "ISO-8859-1";
+
+h1 {
+			padding-top: 120px;
+			color: white;
+			font-size: 50px;
+			animation: links .5s linear backwards;
+		}
+
+		body {
+			background-image: url(../images/Library.png);
+			background-repeat: no-repeat;
+			background-size: 100% 775px;
+		}
+
+		footer {
+			min-height: 404px;
+		}
+
+		span {
+			color: white;
+		}
+
+		@keyframes links {
+			0% {
+				transform: translateY(-50px) scale(0) rotate(-45deg);
+			}
+		}

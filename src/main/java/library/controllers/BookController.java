@@ -39,20 +39,25 @@ public class BookController {
 	@Autowired
 	private GenreRepository repo;
 
+	@GetMapping("/index")
+	public String showHomePage() {
+		return "index";
+	}
+
 	@GetMapping("")
 	public String viewLoginPage() {
 		return "redirect:/login";
 	}
-	
+
 	@GetMapping("/login")
 	public String defaultPageToShow() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if(authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+		if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
 			return "login";
 		}
 		return "index";
 	}
-	
+
 	@GetMapping("/loginSuccessful")
 	public String toDelete() {
 		return "index";

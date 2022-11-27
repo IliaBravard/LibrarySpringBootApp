@@ -1,0 +1,76 @@
+@charset "ISO-8859-1";
+
+	header {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 0px;
+            background-color: white;
+			border-radius: 30px;
+        }
+        
+        header:hover {
+        	box-shadow: 2px 2px 15px white;
+        	transition: 0.5s;
+        }
+
+        header nav ul {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            list-style: none;
+        }
+
+	    input {
+	    	background-color: transparent;
+	    	border-style: none;
+	    	font-size: 20px;
+            margin: 0 20px;
+            text-decoration: none;
+            font-family: Arial, Halvetica, sans-serif;
+            transition: letter-spacing .2s;
+            cursor: pointer;
+	    }
+
+        header nav ul li a {
+            font-size: 20px;
+            margin: 0 20px;
+            text-decoration: none;
+            font-family: Arial, Halvetica, sans-serif;
+            transition: letter-spacing .2s;
+        }
+
+        header nav ul li a:hover {
+            letter-spacing: 2px;
+        }
+        
+        input:hover {
+        	letter-spacing: 2px;
+        }
+
+        header nav ul li:last-child a {
+            padding: 7px 50px;
+            color: black;
+            background-color: grey;
+            border-radius: 50px;
+        }
+
+        header nav ul li {
+            animation: links .3s linear backwards;
+            animation-delay: calc(.3s * var(--i));
+        }
+
+        img {
+            padding-left: 30px;
+            padding-top: 5px;
+        }
+
+        @keyframes links {
+            0% {
+                transform: translateY(-50px) scale(0) rotate(-45deg);
+            }
+        }
