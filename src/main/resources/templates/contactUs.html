@@ -1,142 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Contact Us!</title>
-	<link hred="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
-	<style>
-		* {
-			padding: 0;
-			margin: 0;
-			box-sizing: border-box;
-			font-family: 'Quicksand', sans-serif;
-		}
-
-		body {
-			width: 100%;
-			height: 100vh;
-		}
-
-		.container {
-			position: relative;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			width: 100%;
-			height: 100%;
-			padding: 20px 100px;
-		}
-
-		.container:after {
-			content: '';
-			position: absolute;
-			left: 0;
-			top: 0;
-			width: 100%;
-			height: 100%;
-			background-color: grey;
-			z-index: -1;
-		}
-
-		.contact {
-			max-width: 950px;
-			display: grid;
-			grid-template-columns: repeat(2, 1fr);
-			justify-content: center;
-			align-items: center;
-			text-align: center;
-			background-color: #fff;
-			border-top-right-radius: 25px;
-			border-bottom-right-radius: 25px;
-			box-shadow: 12px 12px 22px black;
-		}
-
-		.contact:hover {
-			box-shadow: 12px 12px 22px #629296;
-			transition: 600ms;
-		}
-
-		.left {
-			height: 100%;
-			background: url(./contactImage.png) no-repeat center;
-			background-size: cover;
-		}
-
-		.right {
-			padding: 25px 40px;
-		}
-
-		h1 {
-			position: relative;
-			padding-bottom: 10px;
-			margin-bottom: 10px;
-			color: black;
-			font-size: 40px;
-			font-weight: 800;
-			padding-top: 10px;
-		}
-
-		h1:after {
-			content: '';
-			position: absolute;
-			left: 50%;
-			bottom: 0;
-			transform: translateX(-50%);
-			height: 4px;
-			width: 115px;
-			border-radius: 2px;
-			background-color: #87545b;
-			margin-bottom: 5px;
-		}
-
-		.field {
-			width: 100%;
-			padding: 0.5rem 1rem;
-			background-color: #f3eeef;
-			font-size: 1.1 rem;
-			margin-bottom: 22px;
-			transition: 400ms;
-			outline: none;
-			border: 1px solid #a1a3ce;
-			border-radius: 5px;
-		}
-
-		.field:focus {
-			background-color: #fff;
-			border: 1px solid black;
-		}
-
-		.area {
-			min-height: 150px;
-		}
-
-		.button {
-			background-color: #87545b;
-			color: white;
-			padding: 0.5rem 1rem;
-			outline: none;
-			border: none;
-			border-radius: 10px;
-			height: 40px;
-			width: 220px;
-			cursor: pointer;
-			font-size: 17px;
-		}
-
-		.button:hover {
-			background-color: white;
-			border: 1px solid #87545b;
-			color: black;
-			transition: 400ms;
-		}
-
-		.right {
-			width: 600px;
-		}
-	</style>
+	<link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
+	<link rel="stylesheet" th:href="@{/styling/contactStyle.css}" />
+	<link rel="icon" th:href="@{/images/BearLogo.png}">
 </head>
 
 <body>
@@ -145,13 +17,13 @@
 			<div class="contact">
 				<div class="left"></div>
 				<div class="right">
-					<img src="./managerIcon.png" style="width:65px; height:65px;">
+					<img th:src="@{images/ManagerIcon.png}" style="width:65px; height: 65px;">
 					<h1>CONTACT US!</h1>
-					<input type="text" class="field" placeholder="Subject" name="subject" required autofocus />
+					<input type="text" class="field" placeholder="*Subject*" name="subject" required autofocus />
 					<input type="text" class="field" name="fullName" required minlength="3" maxlength="45"
-						placeholder="Your Full Name" />
+						placeholder="*Your Full Name*" />
 					<input type="email" name="email" class="field" required maxlength="45"
-						placeholder="Email Address" />
+						placeholder="*Email Address*" />
 					<textarea rows="5" name="message" placeholder="Message" class="field area"></textarea>
 					<input type="submit" value="Send" class="button">
 				</div>
