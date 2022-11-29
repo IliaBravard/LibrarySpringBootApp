@@ -11,6 +11,9 @@
 	<link rel="icon" th:href="@{/images/BearLogo.png}">
 </head>
 
+<header th:replace="fragments/header :: html_header">
+</header>
+
 <body>
 	<form th:action="@{/contact}" method="POST">
 		<div class="container">
@@ -19,11 +22,11 @@
 				<div class="right">
 					<img th:src="@{images/ManagerIcon.png}" style="width:65px; height: 65px;">
 					<h1>CONTACT US!</h1>
-					<input type="text" class="field" placeholder="*Subject*" name="subject" required autofocus />
+					<input type="text" class="field" placeholder="*Subject" name="subject" required autofocus />
 					<input type="text" class="field" name="fullName" required minlength="3" maxlength="45"
-						placeholder="*Your Full Name*" />
+						placeholder="*Your Full Name" />
 					<input type="email" name="email" class="field" required maxlength="45"
-						placeholder="*Email Address*" />
+						placeholder="*Email Address" />
 					<textarea rows="5" name="message" placeholder="Message" class="field area"></textarea>
 					<input type="submit" value="Send" class="button">
 				</div>

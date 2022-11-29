@@ -3,56 +3,58 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Register</title>
+	<title>Register Users!</title>
+	<link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+
+	<link rel="stylesheet" th:href="@{/styling/addUserStyle.css}" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<link rel="icon" th:href="@{/images/BearLogo.png}">
 </head>
 
 <body>
-	<h1>Sign Up Form<h1>
+	<header th:replace="fragments/header :: html_header">
+	</header>
+	<form th:action="@{/processRegistration}" method=POST th:object="${user}">
+		<div class="userContainer">
+			<div class="contact">
+				<div class="left"></div>
+				<div class="right">
+					<img th:src="@{images/User.png}" style="width:65px; height: 65px;">
+					<h1 class="heading">ADD USERS!</h1>
 
-			<form th:action="@{/processRegistration}" method=POST th:object="${user}">
-				<div>
-					<label>First Name:</label>
-					<input type="text" name="fName" th:field="*{firstName}" minlength="2" , maxlength="20" required />
+					<input type="text" class="field" placeholder="*First Name" name="fName" th:field="*{firstName}"
+						required autofocus />
+					<input type="text" class="field" name="lName" th:field="*{lastName}" required minlength="3"
+						maxlength="45" placeholder="*Last Name" />
+					<input type="email" name="email" th:field="*{emailAddress}" class="field" required maxlength="45"
+						placeholder="*Email Address" />
+
+					<input type="password" name="password" th:field="*{password}" class="field" required maxlength="45"
+						placeholder="******************" />
+
+					<input type="phone" name="phone" th:field="*{phone}" class="field" required maxlength="45"
+						placeholder="*(555) 888-9999" />
+
+					<select th:field="*{roles}" class="form-control selectpicker field" multiple
+						data-live-search="true">
+						<option th:each="role:${listOfRoles}" th:value="${role.roleID}" th:text="${role.roleName}">
+						</option>
+					</select>
+
+					<input type="submit" value="Register" class="button">
 				</div>
+			</div>
+		</div>
+	</form>
 
-				<div>
-					<label>Last Name:</label>
-					<input type="text" name="lName" th:field="*{lastName}" minlength="2" , maxlength="20" required />
-				</div>
-
-				<div>
-					<label>Username (email):</label>
-					<input type="email" name="username" th:field="*{emailAddress}" minlength="12" , maxlength="20"
-						required />
-				</div>
-
-				<div>
-					<label>Password:</label>
-					<input type="password" name="password" th:field="*{password}" minlength="6" , maxlength="12"
-						required />
-				</div>
-
-
-				<div>
-					<label>Phone Number:</label>
-					<input type=" tel" name="phone" placeholder="(999) 888-6666"
-						pattern="(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}" th:field="*{phone}" required />
-				</div><br><br>
-
-				<div>
-					<label>Role(s):</label>
-					<th:block th:each="role : ${listOfRoles}">
-						<div>
-							<input type="checkbox" th:field="*{roles}" th:text="${role.roleName}"
-								th:value="${role.roleID}" />
-						</div>
-					</th:block>
-				</div>
-
-				<div>
-					<button type="submit">Sign Up</button>
-				</div>
-			</form>
+	<script src=" https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 </body>
 
 </html>
