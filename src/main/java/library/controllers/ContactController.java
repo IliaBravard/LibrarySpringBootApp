@@ -54,6 +54,6 @@ public class ContactController {
 
 		mailSender.send(message);
 
-		return "contactSuccess";
+		return "contactUs";
 	}
 }

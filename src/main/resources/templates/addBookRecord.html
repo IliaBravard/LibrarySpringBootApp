@@ -3,7 +3,15 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Add a Book</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Add a Book!</title>
+	<link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" th:href="@{/styling/contactStyle.css}" />
+	<link rel="icon" th:href="@{/images/BearLogo.png}">
+	<script th:src="@{/styling/swingPopup.js}"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
@@ -27,53 +35,172 @@
 		};
 	</script>
 
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+			box-sizing: border-box;
+			font-family: 'Quicksand', sans-serif;
+		}
+
+		body {
+			width: 100%;
+			height: 100vh;
+		}
+
+		.container {
+			position: relative;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 100%;
+			height: 100%;
+			padding-top: 70px;
+			padding-bottom: 25px;
+		}
+
+		.container:after {
+			content: '';
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background-color: grey;
+			z-index: -1;
+		}
+
+		.contact {
+			max-width: 950px;
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+			background-color: #fff;
+			border-top-right-radius: 25px;
+			border-bottom-right-radius: 25px;
+			box-shadow: 12px 12px 22px black;
+		}
+
+		.contact:hover {
+			box-shadow: 12px 12px 22px #f0ba66;
+			transition: 600ms;
+		}
+
+		.left {
+			height: 100%;
+			background: url(../images/BookImageLeft.png) no-repeat center;
+			background-size: cover;
+		}
+
+		h1 {
+			position: relative;
+			padding-bottom: 10px;
+			margin-bottom: 10px;
+			color: black;
+			font-size: 40px;
+			padding-top: 10px;
+		}
+
+		h1:after {
+			content: '';
+			position: absolute;
+			left: 50%;
+			bottom: 0;
+			transform: translateX(-50%);
+			height: 3px;
+			width: 115px;
+			border-radius: 2px;
+			background-color: #8e421c;
+			margin-bottom: 5px;
+		}
+
+		.field {
+			width: 100%;
+			padding: 0.5rem 1rem;
+			background-color: #f4ece8;
+			font-size: 1.1 rem;
+			margin-bottom: 22px;
+			transition: 400ms;
+			outline: none;
+			border: 1px solid #a1a3ce;
+			border-radius: 5px;
+		}
+
+		.field:focus {
+			background-color: #fff;
+			border: 1px solid black;
+		}
+
+		.area {
+			min-height: 150px;
+		}
+
+		.button {
+			background-color: #8e421c;
+			color: white;
+			padding: 0.5rem 1rem;
+			outline: none;
+			border: none;
+			border-radius: 10px;
+			height: 40px;
+			width: 220px;
+			cursor: pointer;
+			font-size: 17px;
+		}
+
+		.button:hover {
+			background-color: white;
+			color: black;
+			transition: 400ms;
+		}
+
+		.right {
+			width: 600px;
+			padding: 10px 40px;
+		}
+
+		header {
+			z-index: 1;
+		}
+	</style>
 </head>
 
+<header th:replace="fragments/header :: html_header">
+</header>
+
 <body>
-	<h1>Add a Book</h1>
-
 	<form th:action="@{/processBookAddition}" method="POST" th:object="${book}" enctype="multipart/form-data">
+		<div class="container">
+			<div class="contact">
+				<div class="left"></div>
+				<div class="right">
+					<img th:src="@{images/BookIcon.png}" style="width:50px; height: 50px;">
+					<h1>Add a Book Record!</h1>
+					<label>*Book Cover Image (.png, .jpeg, .jpg)</label>
 
-		<div>
-			<label>Book Cover Image:</label>
-			<input type="file" name="fileImage" id="fileImage" accept="image/png, image/jpeg, image/jpg" />
-		</div>
+					<input type="file" name="fileImage" id="fileImage" accept="image/png, image/jpeg, image/jpg"
+						class="field" style="margin-top: 10px;" autofocus required />
 
-		<div>
-			<span id="cover" style="width:50px; height:75px;"></span>
-		</div>
+					<input type="text" class="field" th:field="*{isbn}" required placeholder="*ISBN Number">
 
-		<div>
-			<label>ISBN:</label>
-			<input type="text" th:field="*{isbn}" required>
-		</div>
+					<input type="text" class="field" th:field="*{title}" required placeholder="*Book Title">
 
-		<div>
-			<label>Title:</label>
-			<input type="text" th:field="*{title}" required>
-		</div>
+					<input class="field" type="text" th:field="*{author}" placeholder="*Book Author" />
 
-		<div>
-			<label>Author:</label>
-			<input type="text" th:field="*{author}" />
-		</div>
+					<input type="number" class="field" th:field="*{numOfPages}" placeholder="*Total Number Of Pages">
 
-		<div>
-			<label>Genre:</label>
+					<select th:field="*{genre}" class="field">
+						<option th:each="genre : ${genres}" th:text="${genre.bookGenres}" th:value="${genre.genreID}">
+						</option>
+					</select>
 
-			<div>
-				<select th:field="*{genre}">
-					<th:block th:each="genre : ${genres}">
-						<option th:text="${genre.bookGenres}" th:value="${genre.genreID}"></option>
-					</th:block>
-				</select>
+					<input id="submit" type="submit" value="Add" class="button" onclick="displayPopup()">
+				</div>
 			</div>
-
 		</div>
-
-		<div>
-			<button type="submit">Add Book</button>
-		</div>
+	</form>
 </body>
 
 </html>
