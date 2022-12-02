@@ -1,37 +1,125 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="ISO-8859-1">
-	<title>Insert title here</title>
+	<meta charset="UTF-8">
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+	<link rel="icon" href="picture2.png" type="image/x-icon" />
+	<link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
+	<link rel="icon" th:href="@{/images/BearLogo.png}">
+	<title>View All Users!</title>
+
+	<style>
+		* {
+			font-family: 'Quicksand', sans-serif;
+		}
+
+		.listItem {
+			margin-top: 7px;
+			margin-bottom: -8.5px;
+		}
+
+		.listItem:hover {
+			letter-spacing: 2px;
+			text-decoration: none !important;
+		}
+
+		.hyperlink:hover {
+			text-decoration: none;
+			color: #551A8B;
+		}
+
+		th,
+		h1 {
+			font-weight: bold;
+			text-align: center;
+		}
+
+		a:hover {
+			text-decoration: none;
+		}
+
+		table {
+			margin-top: 10px;
+		}
+
+		.btn-warning {
+			border-radius: 24px;
+			border: 1px solid black;
+			box-shadow: 2px 2px 9px grey;
+		}
+
+		.btn-warning:hover {
+			color: white;
+			box-shadow: none;
+		}
+
+		.btn-danger {
+			box-shadow: 2px 2px 5px grey;
+		}
+
+		.btn-danger:hover {
+			box-shadow: none;
+		}
+	</style>
+
 </head>
 
 <body>
-	<h1>All Users</h1>
-
-	<div>
-		<table>
+	<header th:replace="fragments/header :: html_header">
+	</header>
+	<div class="container">
+		<h1 style="margin: 25px; text-align: center; margin-top: 60px; margin-bottom: 5px;">All Users</h1>
+		<a th:href="@{/register}" class="btn btn-warning btn-md">
+			ADD <span><img th:src="@{images/AddUserIcon.png}"></span>
+		</a>
+		<table class="table table-striped table-hover">
 			<thread>
-				<tr>
+				<tr class="table-success">
+					<th></th>
 					<th>User ID#</th>
 					<th>First Name</th>
 					<th>Last Name</th>
 					<th>Username</th>
 					<th>Phone Number</th>
 					<th>User Role</th>
+					<th>Actions</th>
 				</tr>
 			</thread>
 			<tbody>
 				<tr th:each="user: ${listOfUsers}">
-					<td th:text=${user.userID}>User ID#</td>
-					<td th:text=${user.firstName}>First Name</td>
-					<td th:text=${user.lastName}>Last Name</td>
-					<td th:text=${user.emailAddress}>Username</td>
-					<td th:text=${user.phone}>Phone Number</td>
-					<td th:text=${user.roles}>User Role</td>
+					<td><img th:src="@{images/Profile.png}"></td>
+					<td th:text=${user.userID}></td>
+					<td th:text=${user.firstName}></td>
+					<td th:text=${user.lastName}></td>
+					<td th:text=${user.emailAddress}></td>
+					<td th:text=${user.phone}></td>
+					<td th:text=${user.roles}></td>
+					<td>
+
+						<a th:href="@{'/remove/' + ${user.userID}}">
+							<input type="image" th:src="@{images/Delete.png}" class="btn btn-danger">
+						</a>
+					</td>
 				</tr>
 			</tbody>
 		</table>
+
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+			integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+			crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+			integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+			crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+			integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+			crossorigin="anonymous"></script>
 	</div>
 </body>
 

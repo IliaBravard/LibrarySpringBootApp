@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 // Allows access to the bean class
@@ -15,6 +16,7 @@ import library.beans.User;
 import library.beans.UserRole;
 import library.repositories.UserRepository;
 import library.repositories.UserRoleRepository;
+import library.services.UserService;
 
 @Controller // Tells SpringBoot that this is the controller class
 public class UserController {
@@ -24,6 +26,9 @@ public class UserController {
 
 	@Autowired
 	private UserRoleRepository roleRepo;
+
+	@Autowired
+	private UserService service;
 
 	/**
 	 * This method redirects the user to the registration form.
@@ -38,7 +43,7 @@ public class UserController {
 		model.addAttribute("user", new User());
 		return "signup";
 	}
-	
+
 	/**
 	 * This method registers a new user and adds it to the database.
 	 * 
@@ -68,4 +73,11 @@ public class UserController {
 		model.addAttribute("listOfUsers", listOfUsers);
 		return "users";
 	}
+
+	@GetMapping("/remove/{id}")
+	public String deleteBook(@PathVariable(name = "id") Long id) {
+		service.delete(id);
+		return "redirect:/list";
+	}
+
 }
