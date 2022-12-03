@@ -9,6 +9,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -108,8 +109,29 @@ public class BookController {
 	 */
 	@GetMapping("/bookList")
 	public String viewBooks(Model model, @Param("keyword") String keyword) {
-		List<Book> listOfBooks = service.listAll(keyword);
+		return displayNextPage(model, keyword, 1, "title", "asc");
+	}
+
+	@GetMapping("/page/{pageNumber}")
+	public String displayNextPage(Model model, @Param("keyword") String keyword,
+			@PathVariable("pageNumber") int currentPage, @Param("sortField") String sortField,
+			@Param("sortDir") String sortDir) {
+		
+		Page<Book> page = service.listAll(keyword, currentPage, sortField, sortDir);
+
+		long totalElements = page.getTotalElements(); // The total number of book records
+		int totalPages = page.getTotalPages(); // The total number of pages for the book records
+		List<Book> listOfBooks = page.getContent();
+
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("totalElements", totalElements);
+		model.addAttribute("totalPages", totalPages);
 		model.addAttribute("listOfBooks", listOfBooks);
+		model.addAttribute("sortField", sortField);
+		model.addAttribute("sortDir", sortDir);
+		
+		String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
+		model.addAttribute("reverseSortDir", reverseSortDir);
 		return "books";
 	}
 

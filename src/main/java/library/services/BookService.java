@@ -1,8 +1,10 @@
 package library.services;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import library.beans.Book;
@@ -13,11 +15,15 @@ public class BookService {
 	@Autowired
 	private BookRepository repo;
 
-	public List<Book> listAll(String keyword) {
+	public Page<Book> listAll(String keyword, int pageNumber, String sortField, String sortDir) {
+		Sort sort = Sort.by(sortField);
+		sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
+
+		Pageable pageable = PageRequest.of(pageNumber - 1, 5, sort);
 		if (keyword != null) {
-			return repo.findByKeyword(keyword);
+			return repo.findByKeyword(keyword, pageable);
 		}
-		return repo.findAll();
+		return repo.findAll(pageable);
 	}
 
 	public Book save(Book toAdd) {
