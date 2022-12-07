@@ -1,44 +1,56 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="ISO-8859-1">
-	<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Edit the Book!</title>
+	<link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
+
+	<link rel="icon" th:href="@{/images/BearLogo.png}">
+	<link rel="stylesheet" th:href="@{/styling/editBookStyle.css}" />
+	<script th:src="@{/styling/swingPopup.js}"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
+<header th:replace="fragments/header :: html_header">
+</header>
+
 <body>
-	<h1>Edit a Book</h1>
+	<form th:action="@{/processBookAddition}" method="POST" th:object="${book}" enctype="multipart/form-data">
+		<div class="container">
+			<div class="contact">
+				<div class="left"></div>
+				<div class="right">
+					<img th:src="@{/images/EditIcon.png}" style="width:50px; height: 50px;">
+					<h1>Edit the Book!</h1>
 
-	<form th:action="@{/saveBook}" method=POST th:object="${book}">
-		<table>
-			<tr>
-				<td>Book ID#</td>
-				<td><input type="text" th:field="*{bookID}" readonly></td>
-			</tr>
+					<input type="hidden" th:field="*{bookID}" />
 
-			<tr>
-				<td>Book ISBN</td>
-				<td><input type="text" th:field="*{isbn}"></td>
-			</tr>
+					<input type="file" name="fileImage" id="fileImage" accept="image/png, image/jpeg, image/jpg"
+						class="field" style="margin-top: 10px;" autofocus required />
 
-			<tr>
-				<td>Book Title</td>
-				<td><input type="text" th:field="*{title}"></td>
-			</tr>
+					<input type="text" class="field" th:field="*{isbn}" required placeholder="*ISBN Number">
 
-			<tr>
-				<td>Book Author</td>
-				<td><input type="text" th:field="*{author}"></td>
-			</tr>
+					<input type="text" class="field" th:field="*{title}" required placeholder="*Book Title">
 
-			<tr>
-				<td>Page Count</td>
-				<td><input type="number" th:field="*{numOfPages}"></td>
-			</tr>
+					<input class="field" type="text" th:field="*{author}" placeholder="*Book Author" />
 
-			<tr>
-				<td><button type="submit">Save the Book</td>
-			</tr>
+					<input type="number" class="field" th:field="*{numOfPages}" placeholder="*Total Number Of Pages">
+
+					<select th:field="*{genre}" class="field">
+						<option th:each="genre : ${genres}" th:text="${genre.bookGenres}" th:value="${genre.genreID}">
+						</option>
+					</select>
+
+					<input id="submit" type="submit" value="Save" class="button" onclick="displayPopup()">
+				</div>
+			</div>
+		</div>
+	</form>
 </body>
 
 </html>

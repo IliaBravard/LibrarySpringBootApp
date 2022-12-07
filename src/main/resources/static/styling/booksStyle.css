@@ -1,0 +1,69 @@
+@charset "ISO-8859-1";
+
+* {
+			font-family: 'Quicksand', sans-serif;
+		}
+
+		.listItem {
+			margin-top: 7px;
+			margin-bottom: -8.5px;
+		}
+
+		.listItem:hover {
+			letter-spacing: 2px;
+			text-decoration: none !important;
+		}
+
+		.hyperlink:hover {
+			text-decoration: none;
+			color: #551A8B;
+		}
+
+		h1 {
+			font-weight: bold;
+			padding-bottom: 20px;
+		}
+
+		form {
+			padding-bottom: 20px;
+		}
+
+		.btn-warning {
+			border-radius: 24px;
+			border: 1px solid black;
+			box-shadow: 2px 2px 9px grey;
+			margin-bottom: 10px;
+		}
+
+		.btn-warning:hover {
+			color: white;
+			box-shadow: none;
+		}
+
+		.sort {
+			opacity: 0.3;
+		}
+
+		.sort:hover {
+			opacity: 0.9;
+		}
+
+		a:hover {
+			text-decoration: none;
+		}
+
+		.btn-danger {
+			box-shadow: 2px 2px 5px grey;
+		}
+
+		.btn-success {
+			box-shadow: 2px 2px 5px grey;
+		}
+
+		.btn-danger:hover {
+			box-shadow: none;
+		}
+
+		.btn-success:hover {
+			box-shadow: none;
+		}

@@ -8,7 +8,7 @@
 	<title>Add a Book!</title>
 	<link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
 
-	<link rel="stylesheet" th:href="@{/styling/contactStyle.css}" />
+	<link rel="stylesheet" th:href="@{/styling/addBookStyle.css}" />
 	<link rel="icon" th:href="@{/images/BearLogo.png}">
 	<script th:src="@{/styling/swingPopup.js}"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -35,136 +35,6 @@
 		};
 	</script>
 
-	<style>
-		* {
-			padding: 0;
-			margin: 0;
-			box-sizing: border-box;
-			font-family: 'Quicksand', sans-serif;
-		}
-
-		body {
-			width: 100%;
-			height: 100vh;
-		}
-
-		.container {
-			position: relative;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			width: 100%;
-			height: 100%;
-			padding-top: 70px;
-			padding-bottom: 25px;
-		}
-
-		.container:after {
-			content: '';
-			position: absolute;
-			left: 0;
-			top: 0;
-			width: 100%;
-			height: 100%;
-			background-color: grey;
-			z-index: -1;
-		}
-
-		.contact {
-			max-width: 950px;
-			display: grid;
-			grid-template-columns: repeat(2, 1fr);
-			justify-content: center;
-			align-items: center;
-			text-align: center;
-			background-color: #fff;
-			border-top-right-radius: 25px;
-			border-bottom-right-radius: 25px;
-			box-shadow: 12px 12px 22px black;
-		}
-
-		.contact:hover {
-			box-shadow: 12px 12px 22px #f0ba66;
-			transition: 600ms;
-		}
-
-		.left {
-			height: 100%;
-			background: url(../images/BookImageLeft.png) no-repeat center;
-			background-size: cover;
-		}
-
-		h1 {
-			position: relative;
-			padding-bottom: 10px;
-			margin-bottom: 10px;
-			color: black;
-			font-size: 40px;
-			padding-top: 10px;
-		}
-
-		h1:after {
-			content: '';
-			position: absolute;
-			left: 50%;
-			bottom: 0;
-			transform: translateX(-50%);
-			height: 3px;
-			width: 115px;
-			border-radius: 2px;
-			background-color: #8e421c;
-			margin-bottom: 5px;
-		}
-
-		.field {
-			width: 100%;
-			padding: 0.5rem 1rem;
-			background-color: #f4ece8;
-			font-size: 1.1 rem;
-			margin-bottom: 22px;
-			transition: 400ms;
-			outline: none;
-			border: 1px solid #a1a3ce;
-			border-radius: 5px;
-		}
-
-		.field:focus {
-			background-color: #fff;
-			border: 1px solid black;
-		}
-
-		.area {
-			min-height: 150px;
-		}
-
-		.button {
-			background-color: #8e421c;
-			color: white;
-			padding: 0.5rem 1rem;
-			outline: none;
-			border: none;
-			border-radius: 10px;
-			height: 40px;
-			width: 220px;
-			cursor: pointer;
-			font-size: 17px;
-		}
-
-		.button:hover {
-			background-color: white;
-			color: black;
-			transition: 400ms;
-		}
-
-		.right {
-			width: 600px;
-			padding: 10px 40px;
-		}
-
-		header {
-			z-index: 1;
-		}
-	</style>
 </head>
 
 <header th:replace="fragments/header :: html_header">

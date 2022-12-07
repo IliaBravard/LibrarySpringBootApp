@@ -34,8 +34,11 @@ public class Book {
 	@Column(name = "Author")
 	private String author; // The book's author
 
-	@Column(name = "book_cover")
-	private String bookCover;
+	@Column(name = "thumbnail_name")
+	private String thumbnailName;
+
+	@Column(name = "thumbnail_content")
+	private byte[] thumbnailContent;
 
 	@Column(name = "num_of_pages")
 	private String numOfPages;
@@ -57,11 +60,11 @@ public class Book {
 		setAuthor(writer);
 	}
 
-	@Transient
+	@Transient 
 	public String getBookCoverPath() {
-		if (bookCover == null) {
+		if (thumbnailName == null) {
 			return null;
 		}
-		return "/src/main/resources/static/thumbnails/" + bookID + "/" + bookCover;
+		return "/src/main/resources/static/thumbnails/" + bookID + "/" + thumbnailName;
 	}
 }

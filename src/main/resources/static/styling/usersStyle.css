@@ -1,0 +1,56 @@
+@charset "ISO-8859-1";
+
+* {
+			font-family: 'Quicksand', sans-serif;
+		}
+
+		.listItem {
+			margin-top: 7px;
+			margin-bottom: -8.5px;
+		}
+
+		.listItem:hover {
+			letter-spacing: 2px;
+			text-decoration: none !important;
+		}
+
+		.hyperlink:hover {
+			text-decoration: none;
+			color: #551A8B;
+		}
+
+		th {
+			font-weight: bold;
+		}
+		
+		h1 {
+			font-weight: bold;
+			text-align: center;
+		}
+
+		a:hover {
+			text-decoration: none;
+		}
+
+		table {
+			margin-top: 10px;
+		}
+
+		.btn-warning {
+			border-radius: 24px;
+			border: 1px solid black;
+			box-shadow: 2px 2px 9px grey;
+		}
+
+		.btn-warning:hover {
+			color: white;
+			box-shadow: none;
+		}
+
+		.btn-danger {
+			box-shadow: 2px 2px 5px grey;
+		}
+
+		.btn-danger:hover {
+			box-shadow: none;
+		}

@@ -1,43 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="ISO-8859-1">
-	<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
+	<link rel="stylesheet" th:href="@{/styling/booksStyle.css}" />
+	<link rel="icon" th:href="@{/images/BearLogo.png}">
+	<title>View All Books!</title>
+
 </head>
 
+<header th:replace="fragments/header :: html_header">
+</header>
+
 <body>
-	<h1>All Books</h1>
-
-	<div>
+	<div class="container">
+		<h1 style="margin: 25px; text-align: center; margin-top: 70px; margin-bottom: 5px;">All Books</h1>
 		<form th:action="@{/bookList}">
-			Search: <input type="text" name="keyword" required />
-			&nbsp;
-			<input type="submit" value="Search" />
-			&nbsp;
-			<input type="button" id="clear" value="Clear" onclick="clearFilter()" />
-	</div>
+			<div class="d-flex justify-content-center">
+				<input type="text" name="keyword" required style="width: 300px;"
+					placeholder="Enter the item to search ..." />
+				&nbsp;
+				<span><input type="submit" value="Search" /></span>
+				&nbsp;
+				<input type="button" id="clear" value="Clear" onclick="clearFilter()" />
+			</div>
+		</form>
 
-	<div>
-		<table>
+		<a th:href="@{/addBooks}" class="btn btn-warning btn-md">
+			ADD BOOKS <span><img th:src="@{/images/AddBookIcon.png}"></span>
+		</a>
+		<table class="table table-striped table-hover">
 			<thread>
-				<tr>
-					<th>Book Cover</th>
-					<th><a th:href="@{'/page/' + ${currentPage} + '?sortField=bookID&sortDir=' + ${reverseSortDir}}">Book
-							ID#</a></th>
-					<th><a
-							th:href="@{'/page/' + ${currentPage} + '?sortField=isbn&sortDir=' + ${reverseSortDir}}">ISBN</a>
+				<tr class="table-info">
+					<th class="align-middle">Book Cover</th>
+					<th class="align-middle"><a
+							th:href="@{'/page/' + ${currentPage} + '?sortField=bookID&sortDir=' + ${reverseSortDir}}">
+							<img th:src="@{/images/SortIcon.png}" class="sort"></a>&nbsp;Book ID#
 					</th>
-					<th><a
-							th:href="@{'/page/' + ${currentPage} + '?sortField=title&sortDir=' + ${reverseSortDir}}">Title</a>
+
+					<th class="align-middle"><a
+							th:href="@{'/page/' + ${currentPage} + '?sortField=isbn&sortDir=' + ${reverseSortDir}}">
+							<img th:src="@{/images/SortIcon.png}" class="sort"></a>&nbsp;ISBN
 					</th>
-					<th><a
-							th:href="@{'/page/' + ${currentPage} + '?sortField=author&sortDir=' + ${reverseSortDir}}">Author</a>
+					<th class="align-middle"><a
+							th:href="@{'/page/' + ${currentPage} + '?sortField=title&sortDir=' + ${reverseSortDir}}">
+							<img th:src="@{/images/SortIcon.png}" class="sort"></a>&nbsp;Book Title
 					</th>
-					<th><a
-							th:href="@{'/page/' + ${currentPage} + '?sortField=genre&sortDir=' + ${reverseSortDir}}">Genre</a>
+					<th class="align-middle"><a
+							th:href="@{'/page/' + ${currentPage} + '?sortField=author&sortDir=' + ${reverseSortDir}}">
+							<img th:src="@{/images/SortIcon.png}" class="sort"></a>&nbsp;Author
 					</th>
-					<th>Actions</th>
+					<th class="align-middle"><a
+							th:href="@{'/page/' + ${currentPage} + '?sortField=genre&sortDir=' + ${reverseSortDir}}">
+							<img th:src="@{/images/SortIcon.png}" class="sort"></a>&nbsp;Genre
+					</th>
+					<th class="align-middle">Actions</th>
 				</tr>
 			</thread>
 			<tbody>
@@ -47,90 +69,132 @@
 						<img th:src="@{${book.bookCoverPath}}" style="width:50px; height:75px;">
 					</td>
 
-					<td th:text=${book.bookID}>Book ID#</td>
-					<td th:text=${book.isbn}>Book ISBN</td>
-					<td th:text=${book.title}>Title</td>
-					<td th:text=${book.author}>Author</td>
-					<td th:text=${book.genre.bookGenres}>Genre</td>
-					<td>
-						<a th:href="@{'/edit/' + ${book.bookID}}">Edit</a>
-						&nbsp;&nbsp;&nbsp;&nbsp;
-						<a th:href="@{'/delete/' + ${book.bookID}}">Delete</a>
+					<td th:text=${book.bookID} class="align-middle">Book ID#</td>
+					<td th:text=${book.isbn} class="align-middle">Book ISBN</td>
+					<td th:text=${book.title} class="align-middle">Title</td>
+					<td th:text=${book.author} class="align-middle">Author</td>
+					<td th:text=${book.genre.bookGenres} class="align-middle">Genre</td>
+
+
+					<td class="align-middle">
+						<a th:href="@{'/edit/' + ${book.bookID}}">
+							<input type="image" th:src="@{/images/Update.png}" class="btn btn-success">
+						</a>
+						<a th:href="@{'/delete/' + ${book.bookID}}">
+							<input type="image" th:src="@{/images/Delete.png}" class="btn btn-danger">
+						</a>
 					</td>
+				</tr>
+				<tr>
+					<td><strong>Total Books: [[${totalElements}]]</strong></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
 
 	<div>
-		Total Number of Books: [[${totalElements}]] Page [[${currentPage}]] of [[${totalPages}]]
-		&nbsp; - &nbsp;
-		<a th:if="${currentPage > 1}"
-			th:href="@{/page/1} + '?sortField='+ ${sortField} + '&sortDir=' + ${sortDir}">First</a>
-		<span th:unless="${currentPage > 1}">First</span>
+		<nav aria-label="Page navigation example">
+			<ul class="pagination justify-content-center">
 
-		&nbsp;
-		<a th:if="${currentPage > 1}"
-			th:href="@{'/page/' + ${currentPage - 1}} + '?sortField='+ ${sortField} + '&sortDir=' + ${sortDir}">Previous</a>
-		<span th:unless="${currentPage > 1}">Previous</span>
-		&nbsp;
+				<!--FIRST PAGE-->
+				<li class="page-item">
+					<a class="page-link" th:if="${currentPage > 1}"
+						th:href="@{/page/1} + '?sortField='+ ${sortField} + '&sortDir=' + ${sortDir}">
+						<span aria-hidden="true">&laquo;</span>
+					</a>
 
+					<a class="page-link" th:unless="${currentPage > 1}">
+						<span aria-hidden="true">&laquo;</span>
+					</a>
+				</li>
 
-		<th:block th:if="${totalPages <= 10}">
-			<span th:each="i: ${#numbers.sequence(1, totalPages)}">
-				&nbsp;&nbsp;
-				<a th:if="${i != currentPage}"
-					th:href="@{'/page/' + ${i}} + '?sortField='+ ${sortField} + '&sortDir=' + ${sortDir}">[[${i}]]</a>
-				<span th:unless="${i != currentPage}">[[${i}]]</span>
-			</span>
-		</th:block>
+				<!--PREVIOUS PAGE-->
+				<li class="page-item">
+					<a class="page-link" th:if="${currentPage > 1}"
+						th:href="@{'/page/' + ${currentPage - 1}} + '?sortField='+ ${sortField} + '&sortDir=' + ${sortDir}"
+						tabindex="-1">Previous</a>
 
-		<th:block th:if="${totalPages > 10}">
-			<th:block th:if="${currentPage <= 5 || currentPage > totalPages - 4}">
-				<span th:each="i: ${#numbers.sequence(1, 5)}">
-					&nbsp;&nbsp;
-					<a th:if="${i != currentPage}"
-						th:href="@{'/page/' + ${i}} + '?sortField='+ ${sortField} + '&sortDir=' + ${sortDir}">[[${i}]]</a>
-					<span th:unless="${i != currentPage}">[[${i}]]</span>
-				</span>
-				<a th:if="${i != currentPage}"
-					th:href="@{'/page/' + 6} + '?sortField='+ ${sortField} + '&sortDir=' + ${sortDir}">...</a>
-
-				<span th:each="i: ${#numbers.sequence(totalPages - 4, totalPages)}">
-					&nbsp;&nbsp;
-					<a th:if="${i != currentPage}"
-						th:href="@{'/page/' + ${i}} + '?sortField='+ ${sortField} + '&sortDir=' + ${sortDir}">[[${i}]]</a>
-					<span th:unless="${i != currentPage}">[[${i}]]</span>
-				</span>
-			</th:block>
+					<a class="page-link" th:unless="${currentPage > 1}">
+						<span aria-hidden="true">Previous</span>
+					</a>
+				</li>
 
 
-			<th:block th:if="${currentPage > 5 && currentPage <= totalPages - 4}">
-				<a th:if="${i != currentPage}"
-					th:href="@{'/page/' + ${currentPage - 5}} + '?sortField='+ ${sortField} + '&sortDir=' + ${sortDir}">...</a>
+				<!--DISPLAY ALL 10 PAGES TO THE USER IF THE TOTAL PAGES ARE <= 10-->
+				<th:block th:if="${totalPages <= 10}">
+					<li class="page-item" th:each="i: ${#numbers.sequence(1, totalPages)}">
+						<a class="page-link" th:if="${i != currentPage}"
+							th:href="@{'/page/' + ${i}} + '?sortField='+ ${sortField} + '&sortDir=' + ${sortDir}">[[${i}]]</a>
 
-				<span th:each="i: ${#numbers.sequence(currentPage - 4, currentPage + 4)}">
-					&nbsp;&nbsp;
-					<a th:if="${i != currentPage}"
-						th:href="@{'/page/' + ${i}} + '?sortField='+ ${sortField} + '&sortDir=' + ${sortDir}">[[${i}]]</a>
-					<span th:unless="${i != currentPage}">[[${i}]]</span>
-				</span>
+						<a class="page-link" th:unless="${i != currentPage}">
+							<span aria-hidden="true">[[${i}]]</span>
+						</a>
+					</li>
+				</th:block>
 
+				<!--OTHERWISE, IF THE TOTAL NUMBER OF PAGES IS GREATER THAN 10-->
+				<th:block th:if="${totalPages > 10}">
+					<th:block th:if="${currentPage <= 5 || currentPage > totalPages - 4}">
+						<li class="page-item" th:each="i: ${#numbers.sequence(1, 5)}">
+							<a class="page-link" th:if="${i != currentPage}"
+								th:href="@{'/page/' + ${i}} + '?sortField='+ ${sortField} + '&sortDir=' + ${sortDir}">[[${i}]]</a>
+							<a class="page-link" th:unless="${i != currentPage}">
+								<span aria-hidden="true">[[${i}]]</span>
+							</a>
+						</li>
 
-				<a th:if="${i != currentPage}"
-					th:href="@{'/page/' + ${currentPage + 5}} + '?sortField='+ ${sortField} + '&sortDir=' + ${sortDir}">...</a>
-			</th:block>
-		</th:block>
+						<a class="page-link" th:if="${i != currentPage}"
+							th:href="@{'/page/' + 6} + '?sortField='+ ${sortField} + '&sortDir=' + ${sortDir}">...</a>
 
-		&nbsp;
-		<a th:if="${currentPage < totalPages}"
-			th:href="@{'/page/' + ${currentPage + 1}} + '?sortField='+ ${sortField} + '&sortDir=' + ${sortDir}">Next</a>
-		<span th:unless="${currentPage < totalPages}">Next</span>
-		&nbsp;
+						<li class="page-item" th:each="i: ${#numbers.sequence(totalPages - 4, totalPages)}">
+							<a class="page-link" th:if="${i != currentPage}"
+								th:href="@{'/page/' + ${i}} + '?sortField='+ ${sortField} + '&sortDir=' + ${sortDir}">[[${i}]]</a>
+							<a class="page-link" th:unless="${i != currentPage}">
+								<span aria-hidden="true">[[${i}]]</span>
+							</a>
+						</li>
+					</th:block>
+				</th:block>
 
-		<a th:if="${currentPage < totalPages}"
-			th:href="@{'/page/' + ${totalPages}} + '?sortField='+ ${sortField} + '&sortDir=' + ${sortDir}">Last</a>
-		<span th:unless="${currentPage < totalPages}">Last</span>
+				<!--NOW WE SHOULD HANDLE THE CASE WHEN THE USER PRESSES ON THE ELIPSES-->
+				<th:block th:if="${currentPage > 5 && currentPage <= totalPages - 4}">
+					<a class="page-link" th:if="${i != currentPage}"
+						th:href="@{'/page/' + ${currentPage - 5}} + '?sortField='+ ${sortField} + '&sortDir=' + ${sortDir}">...</a>
+
+					<li class="page-item" th:each="i: ${#numbers.sequence(currentPage - 4, currentPage + 4)}">
+						<a class="page-link" th:if="${i != currentPage}"
+							th:href="@{'/page/' + ${i}} + '?sortField='+ ${sortField} + '&sortDir=' + ${sortDir}">[[${i}]]</a>
+
+						<a class="page-link" th:unless="${i != currentPage}">
+							<span aria-hidden="true">[[${i}]]</span>
+						</a>
+					</li>
+
+					<a class="page-link" th:if="${i != currentPage}"
+						th:href="@{'/page/' + ${currentPage + 5}} + '?sortField='+ ${sortField} + '&sortDir=' + ${sortDir}">...</a>
+				</th:block>
+
+				<!--NEXT PAGE-->
+				<li class="page-item">
+					<a class="page-link" th:if="${currentPage < totalPages}"
+						th:href="@{'/page/' + ${currentPage + 1}} + '?sortField='+ ${sortField} + '&sortDir=' + ${sortDir}">Next</a>
+
+					<a class="page-link" th:unless="${currentPage < totalPages}">
+						<span aria-hidden="true">Next</span>
+					</a>
+				</li>
+
+				<!--LAST PAGE-->
+				<li class="page-item">
+					<a class="page-link" th:if="${currentPage < totalPages}"
+						th:href="@{'/page/' + ${totalPages}} + '?sortField='+ ${sortField} + '&sortDir=' + ${sortDir}">&raquo;</a>
+
+					<a class="page-link" th:unless="${currentPage < totalPages}">
+						<span aria-hidden="true">&raquo;</span>
+					</a>
+				</li>
+			</ul>
+		</nav>
 
 	</div>
 
@@ -139,6 +203,16 @@
 			window.location = '/bookList';
 		}
 	</script>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
 </body>
 
 </html>

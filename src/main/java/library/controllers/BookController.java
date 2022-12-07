@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import library.beans.Book;
 import library.beans.Genre;
@@ -67,20 +66,22 @@ public class BookController {
 	@GetMapping("/addBooks")
 	public String viewAddBookPage(Model model) {
 		List<Genre> genres = repo.findAll();
-		model.addAttribute("book", new Book());
 		model.addAttribute("genres", genres);
+		model.addAttribute("book", new Book());
 		return "addBookRecord";
 	}
 
 	@PostMapping("/processBookAddition")
 	public String processBookAddition(@ModelAttribute("book") Book toAdd,
-			@RequestParam("fileImage") MultipartFile multipartFile, RedirectAttributes ra) throws IOException {
+			@RequestParam("fileImage") MultipartFile multipartFile) throws IOException {
 
 		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-		toAdd.setBookCover(fileName);
+		toAdd.setThumbnailContent(multipartFile.getBytes());
+		toAdd.setThumbnailName(fileName);
+		
 		Book savedBook = service.save(toAdd);
-
 		String uploadDirectory = "./src/main/resources/static/thumbnails/" + savedBook.getBookID();
+
 		Path uploadPath = Paths.get(uploadDirectory);
 
 		if (!Files.exists(uploadPath)) {
@@ -89,16 +90,11 @@ public class BookController {
 
 		try (InputStream inputStream = multipartFile.getInputStream()) {
 			Path filePath = uploadPath.resolve(fileName);
-			System.out.println(filePath.toFile().getAbsolutePath()); /* Diagnostic */
-
 			Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException e) {
 			throw new IOException("The following file could not be saved: " + fileName);
 		}
-
-		ra.addFlashAttribute("message", "The book was saved successfully");
-
-		return "index";
+		return "redirect:/bookList";
 	}
 
 	/**
@@ -116,38 +112,35 @@ public class BookController {
 	public String displayNextPage(Model model, @Param("keyword") String keyword,
 			@PathVariable("pageNumber") int currentPage, @Param("sortField") String sortField,
 			@Param("sortDir") String sortDir) {
-		
+
 		Page<Book> page = service.listAll(keyword, currentPage, sortField, sortDir);
 
 		long totalElements = page.getTotalElements(); // The total number of book records
 		int totalPages = page.getTotalPages(); // The total number of pages for the book records
 		List<Book> listOfBooks = page.getContent();
 
-		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("totalElements", totalElements);
-		model.addAttribute("totalPages", totalPages);
 		model.addAttribute("listOfBooks", listOfBooks);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("totalPages", totalPages);
 		model.addAttribute("sortField", sortField);
 		model.addAttribute("sortDir", sortDir);
-		
+
 		String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
 		model.addAttribute("reverseSortDir", reverseSortDir);
 		return "books";
 	}
 
 	@GetMapping("/edit/{id}")
-	public ModelAndView showEditPage(@PathVariable(name = "id") Long id) {
+	public ModelAndView showEditPage(@PathVariable(name = "id") Long id, Model model) {
+		List<Genre> genres = repo.findAll();
 		ModelAndView mav = new ModelAndView("editBook");
 
+		model.addAttribute("genres", genres);
 		Book toEdit = service.get(id);
+		System.out.println(toEdit.getBookID());
 		mav.addObject("book", toEdit);
 		return mav;
-	}
-
-	@PostMapping("/saveBook")
-	public String saveBook(Model model, @ModelAttribute("toAdd") Book toAdd, String keyword) {
-		service.save(toAdd);
-		return "redirect:/bookList";
 	}
 
 	@GetMapping("/delete/{id}")

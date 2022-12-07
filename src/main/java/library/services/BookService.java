@@ -12,6 +12,7 @@ import library.repositories.BookRepository;
 
 @Service
 public class BookService {
+
 	@Autowired
 	private BookRepository repo;
 
@@ -32,6 +33,7 @@ public class BookService {
 	}
 
 	public Book get(Long id) {
+		System.out.println(repo.findById(id).get());
 		return repo.findById(id).get();
 	}
 
